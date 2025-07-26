@@ -3,21 +3,39 @@ package com.student.management.model;
 public class User {
     private int id;
     private String username;
-    private String passwordHash;
+    private transient String password;    // plain password input (transient = not serialized)
+    private String passwordHash;          // hashed password stored in DB
     private String role;
 
-    //no-args constructor
+    // No-args constructor
     public User() {
     }
 
-    //args for new users
-    public User(String username, String passwordHash, String role) {
+    // Constructor for new user registration (with plain password)
+    public User(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    // Full constructor (usually when loading from DB with hashed password)
+    public User(int id, String username, String passwordHash, String role) {
+        this.id = id;
         this.username = username;
         this.passwordHash = passwordHash;
         this.role = role;
     }
 
-    //Getters & setters
+    // Getters and Setters
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -26,6 +44,16 @@ public class User {
         this.username = username;
     }
 
+    // Plain password (transient)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    // Stored hashed password
     public String getPasswordHash() {
         return passwordHash;
     }
@@ -42,26 +70,10 @@ public class User {
         this.role = role;
     }
 
-    //full-arguments constructor
-    public User(int id, String username, String passwordHash, String role) {
-        this.id = id;
-        this.username = username;
-        this.passwordHash = passwordHash;
-        this.role = role;
-    }
-
-    //Getters & Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
     @Override
     public String toString() {
+        // Do not print password or password hash
         return "User{id=" + id + ", username='" + username + '\'' +
                 ", role='" + role + '\'' + '}';
     }
-
 }

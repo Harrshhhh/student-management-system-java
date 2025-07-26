@@ -17,7 +17,7 @@ public class StudentDAO {
     public boolean addStudent(Student student) {
         String query = "INSERT INTO students(name, email, branch, year, marks) VALUES(? , ?, ?, ?, ?)";
         try (Connection connection = DBConnection.getConnection()) {
-            if (connection == null){
+            if (connection == null) {
                 System.err.println("Failed to establish database connection.");
                 return false;
             }
@@ -113,6 +113,7 @@ public class StudentDAO {
         return false;
     }
 
+    //listAllStudents....
     public List<Student> listAllStudents() {
         String query = "SELECT * FROM students";
         List<Student> students = new ArrayList<>();
